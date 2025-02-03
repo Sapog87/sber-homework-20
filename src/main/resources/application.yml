@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: sber-homework-20
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:dev}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+server:
+  port: ${SERVER_PORT:8080}
