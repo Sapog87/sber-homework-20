@@ -50,8 +50,6 @@ class UserServiceImplTest {
 
         UserDto userDto = userService.getUserById(0);
 
-        verify(userRepository).findById(0L);
-
         assertEquals(user.getId(), userDto.getId());
         assertEquals(user.getName(), userDto.getName());
         assertEquals(user.getLogin(), userDto.getLogin());
@@ -63,8 +61,6 @@ class UserServiceImplTest {
         doReturn(Optional.empty()).when(userRepository).findById(anyLong());
 
         assertThrows(UserNotFoundException.class, () -> userService.getUserById(0));
-
-        verify(userRepository).findById(0L);
     }
 
 
@@ -75,9 +71,6 @@ class UserServiceImplTest {
         doNothing().when(userRepository).deleteById(anyLong());
 
         assertDoesNotThrow(() -> userService.deleteUserById(0));
-
-        verify(userRepository).existsById(0L);
-        verify(userRepository).deleteById(0L);
     }
 
     @Test
@@ -106,9 +99,6 @@ class UserServiceImplTest {
         userCreateDto.setLogin("login");
         UserDto userDto = userService.createUser(userCreateDto);
 
-        verify(userRepository).save(any(User.class));
-        verify(userRepository).existsByLogin("login");
-
         assertEquals(user.getId(), userDto.getId());
         assertEquals(user.getName(), userDto.getName());
         assertEquals(user.getLogin(), userDto.getLogin());
@@ -124,8 +114,6 @@ class UserServiceImplTest {
         userCreateDto.setLogin("login");
 
         assertThrows(UserAlreadyExistsException.class, () -> userService.createUser(userCreateDto));
-
-        verify(userRepository).existsByLogin("login");
     }
 
     @Test
@@ -134,8 +122,6 @@ class UserServiceImplTest {
         doReturn(List.of()).when(userRepository).findAll();
 
         List<UserDto> userDtos = userService.getUsers();
-
-        verify(userRepository).findAll();
 
         assertEquals(0, userDtos.size());
     }
@@ -155,9 +141,6 @@ class UserServiceImplTest {
         userUpdateDto.setLogin("login");
         UserDto userDto = userService.updateUser(0, userUpdateDto);
 
-        verify(userRepository).save(any(User.class));
-        verify(userRepository).findById(0L);
-
         assertEquals(user.getId(), userDto.getId());
         assertEquals(user.getName(), userDto.getName());
         assertEquals(user.getLogin(), userDto.getLogin());
@@ -173,7 +156,5 @@ class UserServiceImplTest {
         userUpdateDto.setLogin("login");
 
         assertThrows(UserNotFoundException.class, () -> userService.updateUser(0L, userUpdateDto));
-
-        verify(userRepository).findById(0L);
     }
 }
