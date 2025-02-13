@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserControllerIT {
+class UserApiControllerIT {
     @BeforeAll
     static void setUpBeforeClass() {
         RestAssured.baseURI = "http://localhost";
